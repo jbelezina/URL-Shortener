@@ -39,8 +39,6 @@ db.once('open', function() {
 
 /* Routes ===================================== */
 
-// Home screen
-
   app.get("/new/*", (req, res) => {
     
     let passedUrl = req.params[0];
@@ -67,12 +65,27 @@ db.once('open', function() {
        }); 
         
     }
-  });
+  }); // end of GET /new/*
   
-  app.get("/:code")
+  app.get("/:code", (req,res)=>{
+    
+    let code = req.params.code
+    console.log(code);
+    let redirectTo = "";
+  
+    urlModel.findOne({ 'code': code }, function (err, urlDoc) {
+    if (err) console.log(err);
+    console.log(urlDoc.url);
+    redirectTo = toString(urlDoc.url);
+    res.redirect(redirectTo);
+    })
+    
+    
+    
+  })
   
   
-
+  
 }); // end of DB connection
 
 app.listen(8080);
