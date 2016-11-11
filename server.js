@@ -7,6 +7,7 @@ let express = require('express'),
     mongoose = require('mongoose'),
     randomCodes = require('random-codes'),
     validUrl = require('valid-url'),
+    baseURL = "https://shortyshort.herokuapp.com/",
     portNo = process.env.PORT || 8080;
 
 let app = express(),
