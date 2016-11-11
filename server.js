@@ -5,11 +5,9 @@
 let express = require('express'),
     mongodb = require('mongodb'),
     mongoose = require('mongoose'),
-    dbcred = require('./dbcredentials.js'),
     randomCodes = require('random-codes'),
     validUrl = require('valid-url'),
-    portNo = process.env.PORT || 8080,
-    baseURL = "http://baseURL/";
+    portNo = process.env.PORT || 8080;
 
 let app = express(),
     codeConfig = {
@@ -17,7 +15,8 @@ let app = express(),
       parts: 2,
     },
     rc = new randomCodes(codeConfig),
-    dbUrl = "mongodb://" + dbcred.dbuser + ':' + dbcred.dbpassword  + "@ds143777.mlab.com:43777/shortenerdb";
+
+    dbUrl = process.env.MONGOLAB_URI;
 
 app.set('view engine', 'ejs');
 
@@ -84,8 +83,6 @@ db.once('open', function() {
     
     
   })
-  
-  
   
 }); // end of DB connection
 
