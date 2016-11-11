@@ -8,6 +8,7 @@ let express = require('express'),
     dbcred = require('./dbcredentials.js'),
     randomCodes = require('random-codes'),
     validUrl = require('valid-url'),
+    portNo = process.env.PORT || 8080,
     baseURL = "http://baseURL/";
 
 let app = express(),
@@ -88,5 +89,7 @@ db.once('open', function() {
   
 }); // end of DB connection
 
-app.listen(8080);
+app.listen(portNo, function () {
+  console.log('Example app listening on env port or 8080');
+});
 
