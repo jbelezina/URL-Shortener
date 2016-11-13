@@ -40,10 +40,6 @@ db.once('open', function() {
 
 /* Routes ===================================== */
 
-  app.get('/', (req,res) => {
-    console.log('redirecting to google.com');
-    res.redirect('http://google.com')
-  })
   
   app.get("/new/*", (req, res) => {
     
@@ -79,14 +75,15 @@ db.once('open', function() {
     console.log(code);
     let redirectTo = "";
   
-    urlModel.findOne({ 'code': code })
-      .exec(function (err, urlDoc) {
+    urlModel.findOne({ 'code': code }, 'url, code', function(err,urlDoc){
         if (err) console.log(err);
-        redirectTo = urlDoc.url;    
-        res.redirect('http://google.com');
-      });
-    });  
-
+        redirectTo = urlDoc.url;
+        console.log('logging redirect to');
+        console.log(redirectTo);
+        res.redirect(redirectTo);
+    });
+    
+  });  
 }); // end of DB connection
 
 app.listen(portNo, function () {
