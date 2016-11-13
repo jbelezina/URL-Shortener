@@ -71,18 +71,21 @@ db.once('open', function() {
   
   app.get("/:code", (req,res)=>{
     
+    
+    function UrlToRedirect(result) {
+      res.redirect(result);
+    }
+    
     let code = req.params.code
     console.log(code);
     let redirectTo = "";
   
-    urlModel.findOne({ 'code': code }, 'url, code', function(err,urlDoc){
-        if (err) console.log(err);
-        redirectTo = urlDoc.url;
-        console.log('logging redirect to');
-        console.log(redirectTo);
-        res.redirect(redirectTo);
-    });
-    
+    urlModel.findOne({'code':code}, 'code, url', function(err, result){
+      if (err) console.log(err);
+      let resUrl = result.url
+      console.log('resurl:' + resUrl)
+      UrlToRedirect(resUrl);
+    })
   });  
 }); // end of DB connection
 
