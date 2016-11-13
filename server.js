@@ -4,6 +4,7 @@
 
 let express = require('express'),
     mongodb = require('mongodb'),
+    bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     randomCodes = require('random-codes'),
     validUrl = require('valid-url'),
@@ -16,8 +17,9 @@ let app = express(),
       parts: 2,
     },
     rc = new randomCodes(codeConfig),
-
     dbUrl = process.env.MONGOLAB_URI;
+    
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set('view engine', 'ejs');
 
