@@ -83,9 +83,8 @@ db.once('open', function() {
   
     urlModel.findOne({'code':code}, 'code, url', function(err, result){
       if (err) console.log(err);
-      let resUrl = result.url
-      console.log(resUrl);
-      res.redirect(resUrl);
+      console.log(result);
+      res.redirect(result.url);
     })
   });  
 }); // end of DB connection
