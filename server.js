@@ -85,14 +85,16 @@ db.once('open', function() {
     console.log(code);
     let redirectTo = "";
   
-    urlModel.findOne({'code':code}, 'code, url', function(err, result){
-      if (err) console.log(err);
+    let MongoosePromise = urlModel.findOne({'code':code});
+    
+    MongoosePromise.then(function(result){
       let objResult = result.toObject();
       console.log(objResult);
       let urlTarget = objResult.url;
       console.log(urlTarget);
       res.redirect(urlTarget);
-    })
+    });
+    
   });  
 }); // end of DB connection
 
