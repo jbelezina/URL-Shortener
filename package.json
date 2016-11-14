@@ -9,6 +9,7 @@
     "express": "^4.14.0",
     "mongodb": "^2.2.11",
     "mongoose": "^4.6.7",
+    "morgan": "^1.7.0",
     "random-codes": "0.0.10",
     "valid-url": "^1.0.9"
   },

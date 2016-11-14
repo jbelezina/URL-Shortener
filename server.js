@@ -9,6 +9,9 @@ let express = require('express'),
     randomCodes = require('random-codes'),
     validUrl = require('valid-url'),
     baseURL = "https://shortyshort.herokuapp.com/",
+    morgan = require('morgan'),
+    http = require('http'),
+    path = require('path'),
     portNo = process.env.PORT || 8080;
 
 let app = express(),
@@ -19,7 +22,8 @@ let app = express(),
     rc = new randomCodes(codeConfig),
     dbUrl = process.env.MONGOLAB_URI;
     
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('combined'));
 
 app.set('view engine', 'ejs');
 
@@ -73,11 +77,6 @@ db.once('open', function() {
   
   app.get("/:code", (req,res)=>{
     
-    
-    function UrlToRedirect(result) {
-      res.redirect(result);
-    }
-    
     let code = req.params.code
     console.log(code);
     let redirectTo = "";
@@ -85,8 +84,8 @@ db.once('open', function() {
     urlModel.findOne({'code':code}, 'code, url', function(err, result){
       if (err) console.log(err);
       let resUrl = result.url
-      console.log('resurl:' + resUrl)
-      UrlToRedirect(resUrl);
+      console.log(resUrl);
+      res.redirect(resUrl);
     })
   });  
 }); // end of DB connection
