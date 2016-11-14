@@ -24,6 +24,7 @@ let app = express(),
     
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined'));
+
 app.set('view engine', 'ejs');
 
 mongoose.connect(dbUrl);
@@ -86,7 +87,11 @@ db.once('open', function() {
   
     urlModel.findOne({'code':code}, 'code, url', function(err, result){
       if (err) console.log(err);
-      res.redirect(result.url);
+      let objResult = result.toObject();
+      console.log(objResult);
+      let urlTarget = objResult.url;
+      console.log(urlTarget);
+      res.redirect(urlTarget);
     })
   });  
 }); // end of DB connection
