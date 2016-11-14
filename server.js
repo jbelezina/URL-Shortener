@@ -24,7 +24,6 @@ let app = express(),
     
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined'));
-
 app.set('view engine', 'ejs');
 
 mongoose.connect(dbUrl);
@@ -46,6 +45,10 @@ db.once('open', function() {
 
 /* Routes ===================================== */
 
+  
+  app.get("/", (req,res)=>{
+    res.render('home');
+  });
   
   app.get("/new/*", (req, res) => {
     
@@ -83,7 +86,6 @@ db.once('open', function() {
   
     urlModel.findOne({'code':code}, 'code, url', function(err, result){
       if (err) console.log(err);
-      console.log(result);
       res.redirect(result.url);
     })
   });  
